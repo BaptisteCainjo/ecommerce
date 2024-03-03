@@ -1,0 +1,203 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	<div class="panier">
+		<header id="header" class="col-full">
+			<div id="logo">
+				<img src="/images/logo_orelsan.png" alt="Logo Orelsan">
+			</div>
+			<nav id="site-navigation" class="main-navigation" role="navigation">
+				<div class="menu">
+					<ul class="nav-menu">
+						<li class="page_item page-item-1">
+							<a class="btnRetour" href="/">
+								<span class="flecheBtnRetour">←</span>Retour</a>
+						</li>
+						{% if app.user %}
+
+							<li class="page_item page-item-3 li-profile">
+								<a class="img-profile">
+									<img src="{{ app.user.profilePicture is empty ? 'https://t3.ftcdn.net/jpg/03/39/45/96/360_F_339459697_XAFacNQmwnvJRqe1Fe9VOptPWMUxlZP8.jpg' : asset('uploads/profile_pictures/' ~ app.user.profilePicture) }}" class="img-fluid">
+									<p>{{app.user ? app.user.lastname : 'Se connecter'}}
+										{{app.user ? app.user.firstname : ''}}</p>
+								</a>
+								<hr>
+
+								<a class="txt-profile" href="/{{ app.user ? 'profile' : 'login'}}">
+									<p>{{ app.user ? 'Profil' : ''}}</p>
+								</a>
+
+								<a class="btnLogout" href="/{{ app.user ? 'logout' : 'login'}}">
+									<p>{{ app.user ? 'Déconnexion' : 'Connexion'}}</p>
+									<img src="/images/logout.svg">
+								</a>
+							</li>
+						{% else %}
+							<a href="/login" class="link-login">
+								<img src="/images/login.svg">
+								<p>{{app.user ? app.user.lastname : 'Connexion'}}
+									{{app.user ? app.user.firstname : ''}}</p>
+							</a>
+						{% endif %}
+					</ul>
+				</div>
+			</nav>
+		</header>
+		<div id="content" class="site-content">
+			<div class="col-full">
+				<header class="entry-header">
+					<h1 class="entry-title">Panier</h1>
+				</header>
+				<!-- .entry-header -->
+				<div class="entry-content">
+					<div class="woocommerce">
+						<form class="woocommerce-cart-form" action="/recalculerPanier" name="panier" method="post" href='/commanderPanier'>
+							<table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents" cellspacing="0">
+								<thead>
+									<tr>
+										<th class="product-remove"></th>
+										<th class="product-thumbnail"></th>
+										<th class="product-name">Produit</th>
+										<th class="product-price">Prix</th>
+										<th class="product-quantity">Quantité</th>
+										<th class="product-subtotal">Total</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for lignePanier in panier.lignesPanier %}
+										<tr class="woocommerce-cart-form__cart-item cart_item">
+											<td class="product-remove">
+												<a class="remove" title="Remove this item" href="/supprimerLigne?id={{ lignePanier.article.id }}">×</a>
+											</td>
+											<td class="product-thumbnail"><img class="attachment-shop_thumbnail wp-post-image" width="145" height="145" alt="hoodie_4_front" src="{{ lignePanier.article.image }}"></td>
+											<td class="product-name">{{ lignePanier.article.titre }}
+												<br>
+												<em>{{ lignePanier.article.infoComp }}</em>
+											</td>
+
+											<td class="product-price">
+												<span class="amount">{{ lignePanier.prixUnitaire }}€</span>
+											</td>
+											<td class="product-quantity">
+												<div class="quantity">{% set random = random() %}
+													<label class="screen-reader-text" for="quantity_{{ random }}">Quantity</label>
+													<input id="quantity_{{ random }}" class="input-text qty text" type="number" size="4" max="{{ lignePanier.article.disponibilite }}" title="Qty" value="{{ lignePanier.quantite }}" name="cart[{{ lignePanier.article.id }}][qty]" min="1" step="1">
+												</div>
+											</td>
+											<td class="product-subtotal">
+												<span class="amount">{{ lignePanier.prixTotal }}€</span>
+											</td>
+										</tr>
+										<tr class="space"></tr>
+
+
+									{% endfor %}
+
+								</tbody>
+							</table>
+							<div class="cart-collaterals">
+								<tr>
+									<td class="actions" colspan="6">
+										<div class="forscenario wc-proceed-to-checkout">
+											<input style="opacity:0.01;
+												    width: 1px;
+												    height: 1px;
+												    padding: 0;
+												" class="checkout-button button alt wc-forward" type="submit" value="Effectuer la commande" name="update_cart"/></div>
+									</td>
+								</tr>
+								<div class="cross-sells"></div>
+								<div class="cart_totals ">
+									<h2>Total de la commande</h2>
+									<table cellspacing="0">
+										<tbody>
+											<tr class="cart-subtotal">
+												<th>Sous-total</th>
+												<td>
+													<span class="amount">{{ panier.soustotalSansReduction }}€</span>
+												</td>
+											</tr>
+											<tr class="shipping">
+												<th>Frais de port</th>
+												<td>{{ panier.taxe }}€</td>
+											</tr>
+											<tr class="order-total">
+												<th>Total</th>
+												<td>
+													<strong>
+														<span class="amount">{{ panier.totalSansReduction }}€</span>
+													</strong>
+												</td>
+											</tr>
+											<tr>
+												<td class="actions" colspan="6">
+													<div class="wc-proceed-to-checkout">
+														<input class="checkout-button button alt wc-forward" type="submit" value="Effectuer la commande" name="update_cart"/></div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</form>
+
+					</div>
+				</div>
+			</div>
+			<!-- .col-full -->
+		</div>
+		<footer id="colophon" class="site-footer" role="contentinfo">
+			<div class="col-full">
+				<div class="site-info">
+					<div id="credit" class="col-right">
+						<p>
+							<object type="image/svg+xml" data="/images/deezer.svg" width="152" height="34"></object>
+						</p>
+						<p>
+							Designed by
+							<a title="Premium WordPress Themes & Plugins by WooThemes" alt="Premium WordPress Themes & Plugins by WooThemes" href="http://www.woothemes.com/">
+								<img width="74" height="19" alt="WooThemes" src="/images/woothemes.png">
+							</a>
+						</p>
+					</div>
+				</div>
+				<!-- .site-info -->
+			</div>
+			<!-- .col-full -->
+		</footer>
+		<!-- #content -->
+	</div>
+	<script>
+		const misesAJourQty = document.querySelectorAll(".product-quantity .quantity .input-text");
+
+misesAJourQty.forEach(miseAJourQty => {
+miseAJourQty.addEventListener("change", function () {
+const lignePanier = this.closest(".woocommerce-cart-form__cart-item");
+const prixUnitaire = parseFloat(lignePanier.querySelector(".product-price .amount").innerText);
+const quantite = parseInt(this.value);
+const nouveauPrixTotal = prixUnitaire * quantite;
+lignePanier.querySelector(".product-subtotal .amount").innerText = nouveauPrixTotal.toFixed(2) + "€";
+recalculerTotaux();
+});
+});
+
+function recalculerTotaux() {
+const lignesPanier = document.querySelectorAll(".woocommerce-cart-form__cart-item");
+let sousTotal = 0;
+
+lignesPanier.forEach(lignePanier => {
+const prixTotal = parseFloat(lignePanier.querySelector(".product-subtotal .amount").innerText);
+sousTotal += prixTotal;
+});
+
+const fraisDePort = (sousTotal < 30) ? 10 : (sousTotal < 50) ? 5 : 0;
+
+document.querySelector(".cart-subtotal .amount").innerText = sousTotal.toFixed(2) + "€";
+document.querySelector(".shipping td").innerText = fraisDePort + "€";
+
+const total = sousTotal + fraisDePort;
+document.querySelector(".order-total .amount").innerText = total.toFixed(2) + "€";
+}
+	</script>
+
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+	<section class="vh-100" style="background-color: #f2f2f2;">
+		<div class="py-5 h-100">
+			<div class="row d-flex justify-content-center align-items-center h-100">
+				<div class="col">
+					<div class="card" style="border-radius: 15px;">
+						<div class="card-body p-4">
+							<div class="d-flex text-black">
+								<img src="{{ app.user.profilePicture is empty ? 'https://t3.ftcdn.net/jpg/03/39/45/96/360_F_339459697_XAFacNQmwnvJRqe1Fe9VOptPWMUxlZP8.jpg' : asset('uploads/profile_pictures/' ~ app.user.profilePicture) }}" class="img-fluid" style="width: 180px; border-radius: 10px;">
+								<div class="flex-grow-1 ms-3">
+									<h5 class="mb-1">{{app.user.firstname}}
+										{{app.user.lastname}}</h5>
+									<div class="email-username">
+										<p class="mb-2 pb-1" style="color: #2b2a2a;">{{app.user.username}}</p>
+										<p class="mb-2 pb-1" style="color: #2b2a2a;">{{app.user.email}}</p>
+									</div>
+
+									<div class="d-flex justify-content-start p-2 mb-2" style="background-color: #f2f2f2;">
+										<div class="px-3">
+											<p class="small mb-1">
+												<strong>Adresse</strong>
+											</p>
+											<p class="mb-0">{{ app.user.adresse is empty ? ' ' : app.user.adresse }}</p>
+										</div>
+										<div class="px-3">
+											<p class="small mb-1">
+												<strong>Code postal</strong>
+											</p>
+											<p class="mb-0">{{ app.user.codePostal is empty ? ' ' : app.user.codePostal }}</p>
+										</div>
+										<div class="px-3">
+											<p class="small mb-1">
+												<strong>Ville</strong>
+											</p>
+											<p class="mb-0">{{ app.user.ville is empty ? ' ' : app.user.ville }}</p>
+										</div>
+										<div class="px-3">
+											<p class="small mb-1">
+												<strong>Téléphone</strong>
+											</p>
+											<p class="mb-0">{{ app.user.telephone is empty ? ' ' : app.user.telephone }}</p>
+										</div>
+										<div>
+											<p class="small mb-1">
+												<strong>Age</strong>
+											</p>
+											<p class="mb-0">{{ app.user.profileAge is empty ? ' ' : app.user.profileAge }}</p>
+										</div>
+									</div>
+									<div class="d-flex pt-1">
+										<button type="submit" class="btn-outline-primary me-1 flex-grow-1" onclick="window.location.href='/update'">Modifier</button>
+										<button type="submit" class="btn-primary flex-grow-1" onclick="window.location.href='/'">Accueil</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+{% endblock %}

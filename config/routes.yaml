@@ -1,0 +1,8 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+# config/routes.yaml
+profile_show:
+    path: /profile
+    controller: App\Controller\ProfileController::show

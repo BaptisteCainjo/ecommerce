@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<div class="login100-form validate-form">
+					<span class="login100-form-title p-b-26">
+						Modifier le profil
+					</span>
+
+					{{ form_start(form, {'attr': {'class': 'formulaireRegister'}}) }}
+
+					{{ form_row(form.firstName, {
+						'label': 'Prenom',
+						'row_attr': {
+							'class': 'wrap-input100 validate-input'
+						},
+						'attr': {
+							'class': 'form-control input100',
+							'placeholder': 'Votre prénom'
+						}
+					}) }}
+
+					{{ form_row(form.lastName, {
+						'label': 'Nom',
+						'row_attr': {
+							'class': 'wrap-input100 validate-input'
+						},
+						'attr': {
+							'class': 'form-control input100',
+							'placeholder': 'Votre nom'
+						}
+					}) }}
+
+					{{ form_row(form.username, {
+						'label': 'Pseudo',
+						'row_attr': {
+							'class': 'wrap-input100 validate-input'
+						},
+						'attr': {
+							'class': 'form-control input100',
+							'placeholder': 'Votre pseudo'
+						}
+					}) }}
+
+					{{ form_row(form.email, {
+						'label': 'Email',
+						'row_attr': {
+							'class': 'wrap-input100 validate-input'
+						},
+						'attr': {
+							'class': 'form-control input100',
+							'placeholder': 'Votre Email'
+						}
+					}) }}
+
+					{{ form_row(form.adresse, {
+						'label': 'Adresse',
+						'row_attr': {
+							'class': 'wrap-input100 validate-input'
+						},
+						'attr': {
+							'class': 'form-control input100',
+							'placeholder': 'Votre Adresse'
+						}
+					}) }}
+
+					{{ form_row(form.codePostal, {
+						'label': 'Code Postal',
+						'row_attr': {
+							'class': 'wrap-input100 validate-input'
+						},
+						'attr': {
+							'class': 'form-control input100',
+							'placeholder': 'Votre Code Postal'
+						}
+					}) }}
+					<div class="wrap-login100-form-btn forscenario" style="opacity:0.01;
+																			    width: 25px;
+																			    height: 10px;
+																			    padding: 0;
+																			">
+						<div class="login100-form-bgbtn"></div>
+						<button class="login100-form-btn">
+							Enregistrer
+						</button>
+					</div>
+
+					{{ form_row(form.ville, {
+						'label': 'Ville',
+						'row_attr': {
+							'class': 'wrap-input100 validate-input'
+						},
+						'attr': {
+							'class': 'form-control input100',
+							'placeholder': 'Votre ville'
+						}
+					}) }}
+					{{ form_row(form.telephone, {
+						'label': 'Telephone',
+						'row_attr': {
+							'class': 'wrap-input100 validate-input'
+						},
+						'attr': {
+							'class': 'form-control input100',
+							'placeholder': 'Votre Telephone'
+						}
+					}) }}
+					{{ form_row(form.profileAge, {
+						'label': 'Age',
+						'row_attr': {
+							'class': 'wrap-input100 validate-input'
+						},
+						'attr': {
+							'class': 'form-control input100',
+							'placeholder': 'Votre Age'
+						}
+					}) }}
+					{{ form_row(form.profilePicture, {
+						'label': 'Photo de profil',
+						'row_attr': {
+							'class': 'wrap-input100 validate-input'
+						},
+						'attr': {
+							'class': 'form-control input100',
+						}
+					}) }}
+
+
+					<div class="wrap-login100-form-btn">
+						<div class="login100-form-bgbtn"></div>
+						<button class="login100-form-btn">
+							Enregistrer
+						</button>
+					</div>
+
+					{{ form_end(form) }}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

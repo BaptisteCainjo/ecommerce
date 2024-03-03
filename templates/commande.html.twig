@@ -1,0 +1,349 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+	<div id="page" class="hfeed site">
+		<header id="header" class="col-full">
+			<div id="logo">
+				<img src="/images/logo_orelsan.png" alt="Logo Orelsan">
+			</div>
+			<nav id="site-navigation" class="main-navigation" role="navigation">
+				<div class="menu">
+					<ul class="nav-menu">
+						<li class="page_item page-item-1">
+							<a class="btnRetour" href="/accederAuPanier">
+								<span class="flecheBtnRetour">←</span>Retour</a>
+						</li>
+						{% if app.user %}
+
+							<li class="page_item page-item-3 li-profile">
+								<a class="img-profile">
+									<img src="{{ app.user.profilePicture is empty ? 'https://t3.ftcdn.net/jpg/03/39/45/96/360_F_339459697_XAFacNQmwnvJRqe1Fe9VOptPWMUxlZP8.jpg' : asset('uploads/profile_pictures/' ~ app.user.profilePicture) }}" class="img-fluid">
+									<p>{{app.user ? app.user.lastname : 'Se connecter'}}
+										{{app.user ? app.user.firstname : ''}}</p>
+								</a>
+								<hr>
+
+								<a class="txt-profile" href="/{{ app.user ? 'profile' : 'login'}}">
+									<p>{{ app.user ? 'Profil' : ''}}</p>
+								</a>
+
+								<a class="btnLogout" href="/{{ app.user ? 'logout' : 'login'}}">
+									<p>{{ app.user ? 'Déconnexion' : 'Connexion'}}</p>
+									<img src="/images/logout.svg">
+								</a>
+							</li>
+						{% else %}
+							<a href="/login" class="link-login">
+								<img src="/images/login.svg">
+								<p>{{app.user ? app.user.lastname : 'Connexion'}}
+									{{app.user ? app.user.firstname : ''}}</p>
+							</a>
+						{% endif %}
+					</ul>
+				</div>
+			</nav>
+		</header>
+		<!-- #masthead -->
+
+	</div>
+	<div id="content" class="site-content" tabindex="-1">
+		<div class="col-full">
+			<div id="primary" class="content-area">
+				<main id="main" class="site-main" role="main">
+					<article id="post-8" class="post-8 page type-page status-publish hentry">
+						<header class="entry-header">
+							<h1 class="entry-title">Vos informations pour commande</h1>
+						</header>
+						<!-- .entry-header -->
+						<div class="entry-content">
+							<div class="woocommerce">
+								<div class="woocommerce-notices-wrapper"></div>
+
+								<form class="checkout_coupon woocommerce-form-coupon" action="/recalculerPanierDeux" method="post">
+
+									<p>Si vous disposez d'un code de réduction, veuillez l'appliquer ci-dessous.</p>
+
+									<div class="form-row form-row-first">
+										<label for="coupon_code" class="screen-reader-text">Coupon:</label>
+										<input type="text" name="coupon_code" class="input-text" placeholder="Coupon code" id="coupon_code" value="{{ panier.codePromo }}">
+									</div>
+
+									<button type="submit" class="button" name="apply_coupon" value="Apply coupon">Appliquer le coupon
+									</button>
+									<p id="msgCouponError" style="{{panier.display}} {{panier.colorCodePromo}}">
+										{{panier.valueCodePromo}}
+									</p>
+
+
+									<div class="clear"></div>
+								</form>
+								<div class="woocommerce-notices-wrapper"></div>
+								<form name="checkout" method="post" class="checkout woocommerce-checkout" action="/" enctype="multipart/form-data" novalidate="novalidate">
+
+
+									<div class="col2-set" id="customer_details">
+										<div class="col-1">
+											<div class="woocommerce-billing-fields">
+
+												<h3>Détails de la commande</h3>
+
+
+												<div class="woocommerce-billing-fields__field-wrapper">
+													<p class="form-row form-row-first validate-required" id="billing_first_name_field" data-priority="10">
+														<label for="billing_first_name" class="">Votre prénom<abbr class="required" title="required">*</abbr>
+														</label>
+														<span class="woocommerce-input-wrapper"><input type="text" class="input-text " name="billing_first_name" id="billing_first_name" placeholder="" value="{{app.user.firstname}}" autocomplete="given-name"></span>
+													</p>
+													<p class="form-row form-row-last validate-required" id="billing_last_name_field" data-priority="20">
+														<label for="billing_last_name" class="">Votre nom<abbr class="required" title="required">*</abbr>
+														</label>
+														<span class="woocommerce-input-wrapper"><input type="text" class="input-text " name="billing_last_name" id="billing_last_name" placeholder="" value="{{app.user.lastname}}" autocomplete="family-name"></span>
+													</p>
+													<p class="form-row form-row-wide address-field update_totals_on_change validate-required" id="billing_country_field" data-priority="40">
+														<label for="billing_country" class="">Pays / Région<abbr class="required" title="required">*</abbr>
+														</label>
+														<span class="woocommerce-input-wrapper">
+															<select name="billing_country" id="billing_country" class="country_to_state country_select select2-hidden-accessible" autocomplete="country" data-placeholder="Select a country / region…" data-label="Country / Region" tabindex="-1" aria-hidden="true">
+																<option value="">Sélectionner votre pays / région…</option>
+																<option value="AF">Afghanistan</option>
+																<option value="DZ">Algeria</option>
+																<option value="AD">Andorra</option>
+																<option value="AR">Argentina</option>
+																<option value="AU">Australia</option>
+																<option value="BS">Bahamas</option>
+																<option value="BR">Brazil</option>
+																<option value="IO">British Indian Ocean Territory
+																</option>
+																<option value="BG">Bulgaria</option>
+																<option value="CA">Canada</option>
+																<option value="CN">China</option>
+																<option value="CD">Congo</option>
+																<option value="CR">Costa Rica</option>
+																<option value="HR">Croatia</option>
+																<option value="CU">Cuba</option>
+																<option value="DK">Denmark</option>
+																<option value="FI">Finland</option>
+																<option value="FR" selected="selected">France</option>
+																<option value="PF">French Polynesia</option>
+																<option value="DE">Germany</option>
+																<option value="GR">Greece</option>
+																<option value="GP">Guadeloupe</option>
+																<option value="ID">Indonesia</option>
+																<option value="IR">Iran</option>
+																<option value="IQ">Iraq</option>
+																<option value="IE">Ireland</option>
+																<option value="LU">Luxembourg</option>
+																<option value="MG">Madagascar</option>
+																<option value="MV">Maldives</option>
+																<option value="MX">Mexico</option>
+																<option value="MC">Monaco</option>
+																<option value="ZA">South Africa</option>
+																<option value="KR">South Korea</option>
+																<option value="TN">Tunisia</option>
+																<option value="GB">United Kingdom (UK)</option>
+																<option value="US">United States (US)</option>
+																<option value="VE">Venezuela</option>
+															</select>
+															<span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;">
+																<span class="selection">
+																	<span class="select2-selection select2-selection--single" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-label="Country / Region" role="combobox">
+																		<span class="select2-selection__rendered" id="select2-billing_country-container" role="textbox" aria-readonly="true" title="France">France</span>
+																		<span class="select2-selection__arrow" role="presentation">
+																			<b role="presentation"></b>
+																		</span>
+																	</span>
+																</span>
+																<span class="dropdown-wrapper" aria-hidden="true"></span>
+															</span>
+															<noscript>
+																<button type="submit" name="woocommerce_checkout_update_totals" value="Update country / region">Update country /
+																																																																																								                                                                    region</button>
+															</noscript>
+														</span>
+													</p>
+													<p class="form-row address-field validate-required form-row-wide" id="billing_address_1_field" data-priority="50">
+														<label for="billing_address_1" class="">Adresse&nbsp;<abbr class="required" title="required">*</abbr>
+														</label>
+														<span class="woocommerce-input-wrapper"><input type="text" class="input-text " name="billing_address_1" id="billing_address_1" placeholder="House number and street name" value="{{ app.user.adresse is empty ? ' ' : app.user.adresse }}" autocomplete="address-line1" data-placeholder="House number and street name"></span>
+													</p>
+
+												</p>
+												<p class="form-row address-field form-row-wide" id="billing_address_2_field" data-priority="60">
+													<label for="billing_address_2" class="screen-reader-text">Information complémentaire&nbsp;<span class="optional">(optional)</span>
+													</label>
+													<span class="woocommerce-input-wrapper"><input type="text" class="input-text " name="billing_address_2" id="billing_address_2" placeholder="Apartment, suite, unit, etc. (optional)" value="" autocomplete="address-line2" data-placeholder="Apartment, suite, unit, etc. (optional)"></span>
+												</p>
+												<p class="form-row address-field validate-required validate-postcode form-row-wide" id="billing_postcode_field" data-priority="65" data-o_class="form-row form-row-wide address-field validate-required validate-postcode">
+													<label for="billing_postcode" class="">Code postale&nbsp;<abbr class="required" title="required">*</abbr>
+													</label>
+													<span class="woocommerce-input-wrapper"><input type="text" class="input-text " name="billing_postcode" id="billing_postcode" placeholder="" value="{{ app.user.codePostal is empty ? ' ' : app.user.codePostal }}" autocomplete="postal-code"></span>
+												</p>
+												<p class="form-row address-field validate-required form-row-wide" id="billing_city_field" data-priority="70" data-o_class="form-row form-row-wide address-field validate-required">
+													<label for="billing_city" class="">Ville&nbsp;<abbr class="required" title="required">*</abbr>
+													</label>
+													<span class="woocommerce-input-wrapper"><input type="text" class="input-text " name="billing_city" id="billing_city" placeholder="" value="{{ app.user.ville is empty ? ' ' : app.user.ville }}" autocomplete="address-level2"></span>
+												</p>
+												<p class="form-row form-row-wide validate-required validate-phone" id="billing_phone_field" data-priority="100">
+													<label for="billing_phone" class="">Téléphone&nbsp;<abbr class="required" title="required">*</abbr>
+													</label>
+													<span class="woocommerce-input-wrapper"><input type="tel" class="input-text " name="billing_phone" id="billing_phone" placeholder="" value="{{ app.user.telephone is empty ? ' ' : app.user.telephone }}" autocomplete="tel"></span>
+												</p>
+												<p class="form-row form-row-wide validate-required validate-email" id="billing_email_field" data-priority="110">
+													<label for="billing_email" class="">Adresse-mail&nbsp;<abbr class="required" title="required">*</abbr>
+													</label>
+													<span class="woocommerce-input-wrapper"><input type="email" class="input-text " name="billing_email" id="billing_email" placeholder="" value="{{app.user.email}}" autocomplete="email"></span>
+												</p>
+											</div>
+
+										</div>
+
+									</div>
+
+									<div class="col-2">
+										<div class="woocommerce-shipping-fields"></div>
+										<div class="woocommerce-additional-fields">
+
+											<h3>Informations complémentaire</h3>
+
+											<div class="woocommerce-additional-fields__field-wrapper">
+												<p class="form-row notes" id="order_comments_field" data-priority="">
+													<label for="order_comments" class="">Ajouter une note à la commance&nbsp;<span class="optional">(optional)</span>
+													</label>
+													<span class="woocommerce-input-wrapper">
+														<textarea name="order_comments" class="input-text " id="order_comments" placeholder="Notes concernant votre commande, par exemple, notes spéciales pour la livraison." rows="2" cols="5"></textarea>
+													</span>
+												</p>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+								<h3 id="order_review_heading">Votre commande</h3>
+
+								<div id="order_review" class="woocommerce-checkout-review-order">
+									<div class="commande-titres">
+										<p class="product-name">
+											<strong>Produit(s)</strong>
+										</p>
+										<p class="product-total">
+											<strong>Prix</strong>
+										</p>
+									</div>
+									<tr class="cart_item">
+										{% for lignePanier in panier.lignesPanier %}
+											<div class="commande-product">
+												<div class="commande-product-info">
+													<img src="{{lignePanier.article.image}}">
+
+													<p class="product-name">{{ lignePanier.article.titre}}
+														<strong class="product-quantity">×
+															{{ lignePanier.quantite }}</strong>
+													</p>
+												</div>
+												<p class="product-total">
+													<span class="woocommerce-Price-amount amount">
+														<bdi>{{ lignePanier.prixTotal }}<span class="woocommerce-Price-currencySymbol">€</span>
+														</bdi>
+													</span>
+												</p>
+											</div>
+											<hr>
+										{% endfor %}
+										<div class="commande-total">
+											<p>Total (hors taxe)</p>
+											<p>
+												<span class="woocommerce-Price-amount amount">
+													<bdi>{{ panier.sousTotalSansReduction }}<span class="woocommerce-Price-currencySymbol">€</span>
+													</bdi>
+												</span>
+											</p>
+										</div>
+										<div class="commande-total">
+											<p>Total</p>
+											{% set reduction = reduction ?? 0 %}
+											{% set reduction = panier.getCodePromo() == 'baptiste15' or panier.getCodePromo() == 'elise15' ? 15 : (panier.getCodePromo() == 'corbi30' ? 30 : 0) %}
+											{% if reduction > 0 %}
+
+												<p>
+													<strong>
+														<span class="woocommerce-Price-amount amount">
+															<bdi>
+
+																(-{{ reduction }}%)
+																{{ panier.getTotal() }}</strong>
+															<strike>{{ panier.totalSansReduction }}<span class="woocommerce-Price-currencySymbol">€</span>
+															</strike>
+														{% endif %}
+														{% if reduction == 0 %}
+															<p>
+																{{ panier.getTotal() }}<span class="woocommerce-Price-currencySymbol">€</span>
+															{% endif %}
+														</bdi>
+													</span>
+												</p>
+											</strong>
+										</tr>
+									</tr>
+								</div>
+
+								<div id="payment" class="woocommerce-checkout-payment">
+									<div class="form-row place-order">
+										<div class="woocommerce-terms-and-conditions-wrapper">
+											<div class="woocommerce-privacy-policy-text">
+												<p>Vos données personnelles seront utilisées pour traiter votre commande, soutenir votre expérience sur ce site web et à d'autres fins décrites dans notre politique de confidentialité.</p>
+											</div>
+										</div>
+
+
+										<button type="submit" class="button alt" href="/recherche.html" name="woocommerce_checkout_place_order" id="place_order" value="Place order" data-value="Place order">Valider</button>
+
+
+									</div>
+								</div>
+
+							</div>
+
+
+						</form>
+
+					</div>
+				</div>
+				<!-- .entry-content -->
+			</article>
+			<!-- #post-## -->
+
+		</main>
+		<!-- #main -->
+	</div>
+	<!-- #primary -->
+
+</div>
+<!-- .col-full --></div><!-- #content --><footer id="colophon" class="site-footer" role="contentinfo">
+<div class="col-full">
+	<div class="site-info">
+		<div id="credit" class="col-right">
+			<p>
+				<object type="image/svg+xml" data="/images/deezer.svg" width="152" height="34"></object>
+			</p>
+			<p>
+				Designed by
+				<a title="Premium WordPress Themes & Plugins by WooThemes" alt="Premium WordPress Themes & Plugins by WooThemes" href="http://www.woothemes.com/">
+					<img width="74" height="19" alt="WooThemes" src="/images/woothemes.png">
+				</a>
+			</p>
+		</div>
+	</div>
+	<!-- .site-info -->
+</div>
+<!-- .col-full --></footer><!-- #colophon --></div><script>button = document.getElementById("place_order");
+console.log(button);
+button.onclick = () => {
+alert('Votre commande a bien été effectué');
+};
+
+document.querySelector(".showcoupon").onclick = () => {
+console.log("elise");
+const test = document.querySelector(".woocommerce-form-coupon")
+test.classList.toggle("active");
+};</script>{% endblock %}

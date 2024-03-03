@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	<div class="panierVide">
+		<header id="header" class="col-full">
+			<div id="logo">
+				<img src="/images/logo_orelsan.png" alt="Logo Orelsan">
+			</div>
+			<nav id="site-navigation" class="main-navigation" role="navigation">
+				<div class="menu">
+					<ul class="nav-menu">
+						<li class="page_item page-item-1">
+								<a class="btnRetour" href="/">
+									<span class="flecheBtnRetour">←</span>Retour</a>
+							</li>
+						{% if app.user %}
+
+							<li class="page_item page-item-3 li-profile">
+								<a class="img-profile">
+								<img src="{{ app.user.profilePicture is empty ? 'https://t3.ftcdn.net/jpg/03/39/45/96/360_F_339459697_XAFacNQmwnvJRqe1Fe9VOptPWMUxlZP8.jpg' : asset('uploads/profile_pictures/' ~ app.user.profilePicture) }}" class="img-fluid">
+									<p>{{app.user ? app.user.lastname : 'Se connecter'}}
+										{{app.user ? app.user.firstname : ''}}</p>
+								</a>
+								<hr>
+
+								<a class="txt-profile" href="/{{ app.user ? 'profile' : 'login'}}">
+									<p>{{ app.user ? 'Profil' : ''}}</p>
+								</a>
+
+								<a class="btnLogout" href="/{{ app.user ? 'logout' : 'login'}}">
+									<p>{{ app.user ? 'Déconnexion' : 'Connexion'}}</p>
+									<img src="/images/logout.svg">
+								</a>
+							</li>
+						{% else %}
+							<a href="/login" class="link-login">
+								<img src="/images/login.svg">
+								<p>{{app.user ? app.user.lastname : 'Connexion'}}
+									{{app.user ? app.user.firstname : ''}}</p>
+							</a>
+						{% endif %}
+					</ul>
+				</div>
+			</nav>
+		</header>
+		<div id="content" class="col-full">
+			<div id="main-sidebar-container">
+				<header>
+					<h1 class="title entry-title">Panier</h1>
+				</header>
+				<div class="woocommerce">
+					<section class="entry">
+						<p class="cart-empty">Votre panier est vide.</p>
+					</section>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer id="colophon" class="site-footer" role="contentinfo">
+		<div class="col-full">
+			<div class="site-info">
+				<div id="credit" class="col-right">
+					<p>
+						<object type="image/svg+xml" data="/images/deezer.svg" width="152" height="34"></object>
+					</p>
+					<p>
+						Designed by
+						<a title="Premium WordPress Themes & Plugins by WooThemes" alt="Premium WordPress Themes & Plugins by WooThemes" href="http://www.woothemes.com/">
+							<img width="74" height="19" alt="WooThemes" src="/images/woothemes.png">
+						</a>
+					</p>
+				</div>
+			</div>
+			<!-- .site-info -->
+		</div>
+		<!-- .col-full -->
+	</footer>
+{% endblock %}

@@ -1,0 +1,179 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	<div class="rechercher">
+		<header id="header" class="col-full">
+			<div id="logo">
+				<img src="/images/logo_orelsan.png" alt="Logo Orelsan">
+			</div>
+			<nav id="site-navigation" class="main-navigation" role="navigation">
+				<button class="menu-toggle" aria-controls="site-navigation" aria-expanded="false">
+					<span>Menu</span>
+				</button>
+				<div class="menu">
+					<ul class="nav-menu">
+						<div>
+							<li class="page_item page-item-1 current_page_item focus">
+								<form class="btnRechercher" action="{{ path('search') }}" method="get">
+									<input id="searchInput" type="text" name="motCle" placeholder="Rechercher...">
+									<a id="searchLink" href="#"><img src="/images/louche.svg"></a>
+								</form>
+							</li>
+							<li class="page_item page-item-2">
+								<a class="btnPanier" href="/accederAuPanier">🧺 Panier</a>
+							</li>
+						</div>
+						{% if app.user %}
+							<li class="page_item page-item-3 li-profile">
+								<a class="img-profile">
+								<img src="{{ app.user.profilePicture is empty ? 'https://t3.ftcdn.net/jpg/03/39/45/96/360_F_339459697_XAFacNQmwnvJRqe1Fe9VOptPWMUxlZP8.jpg' : asset('uploads/profile_pictures/' ~ app.user.profilePicture) }}" class="img-fluid">
+									<p>{{app.user ? app.user.lastname : 'Se connecter'}}
+										{{app.user ? app.user.firstname : ''}}</p>
+								</a>
+								<hr>
+
+								<a class="txt-profile" href="/{{ app.user ? 'profile' : 'login'}}">
+									<p>{{ app.user ? 'Profil' : ''}}</p>
+								</a>
+
+								<a class="btnLogout" href="/{{ app.user ? 'logout' : 'login'}}">
+									<p>{{ app.user ? 'Déconnexion' : 'Connexion'}}</p>
+									<img src="/images/logout.svg">
+								</a>
+							</li>
+						{% else %}
+							<a href="/login" class="link-login">
+								<img src="/images/login.svg">
+								<p>{{app.user ? app.user.lastname : 'Connexion'}}
+									{{app.user ? app.user.firstname : ''}}</p>
+							</a>
+						{% endif %}
+
+
+					</ul>
+				</div>
+			</nav>
+		</header>
+		<div id="content" class="site-content" tabindex="-1">
+			<div class="col-full">
+				<div id="primary">
+					<main id="main" class="site-main" role="main">
+						<header class="woocommerce-products-header">
+							<h1 class="woocommerce-products-header__title page-title">Résultats de la recherche</h1>
+						</header>
+						<ul class="products">
+							{% for article in articles %}
+								{% if loop.index0 is divisible by(3) %}
+									<li class="product type-product first">
+									{% else %}
+										{% if loop.index is divisible by(3) %}
+											<li class="product type-product last">
+											{% else %}
+												<li class="product type-product">
+												{% endif %}
+											{% endif %}
+											<a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="/ajouterLigne?id={{ article.id }}">
+												<img src="{{ article.image }}" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="poster_2_up"/>
+												<h3>
+													{{ article.titre }}</h3>
+												<span class="price">
+													<ins>
+														<span class="amount">{{ article.prix }}
+															€</span>
+													</ins>
+												</span>
+
+											</a>
+											<a class="woocommerce-LoopProduct-link woocommerce-loop-product__link button product_type_simple add_to_cart_button" href="/ajouterLigne?id={{ article.id }}">Mettre dans le panier</a>
+											{# <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link button product_type_simple add_to_cart_button" href="/accederAuPanier">Voir le panier</a> #}
+											{% if article.infoProduct|length > 0 %}
+												<div class="description">
+													<a class="moreInfo">En savoir plus</a>
+													<em class="infoProduct">{{ article.infoProduct }}</em>
+												</div>
+											{% endif %}
+											{# <div class="quantity">{% set random = random() %} #}
+											{# <label class="screen-reader-text" for="quantity_{{ random }}">Quantity</label> #}
+											{# <input id="quantity_{{ random }}" class="input-text qty text" type="number" size="4" max="{{ article.disponibilite }}" title="Qty" value="1" name="cart[{{ article.id }}][qty]" min="1" step="1"> #}
+											{# </div> #}
+												{% if article.pistes is defined %}
+													{% if article.pistes|length > 0 %}<div id="jquery_jplayer_{{ article.id }}" class="jp-jplayer" data-idarticle="{{ article.id }}" data-pistes="{{ article.pistes|json_encode() }}"> </div>
+													<div id="jp_container_{{ article.id }}" class="jp-audio" role="application">
+														<div class="jp-type-playlist">
+															<div class="jp-gui jp-interface">
+																<div class="jp-controls-holder">
+																	<div class="jp-controls">
+																		<button class="jp-previous" role="button" tabindex="0">previous</button>
+																		<button class="jp-play" role="button" tabindex="0">play</button>
+																		{# <button class="jp-stop" role="button" tabindex="0">stop</button> #}
+																		<button class="jp-next" role="button" tabindex="0">next</button>
+																	</div>
+																</div>
+															</div>
+															<div class="jp-playlist">
+																<ul></ul>
+															</div>
+															<div class="jp-no-solution">
+																<span>Update Required</span>
+																To play the media you will need to either update your browser to a recent version or update your
+																<a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+															</div>
+														</div>
+													</div>
+												{% endif %}
+											{% endif %}
+
+										</li>
+									{% endfor %}
+								</ul>
+							</main>
+						</div>
+					</div>
+					<!-- .col-full -->
+				</div>
+				<!-- #content -->
+				<footer id="colophon" class="site-footer" role="contentinfo">
+					<div class="col-full">
+						<div class="site-info">
+							<div id="credit" class="col-right">
+								<p>
+									<object type="image/svg+xml" data="/images/deezer.svg" width="152" height="34"></object>
+								</p>
+								<p>
+									Designed by
+									<a title="Premium WordPress Themes & Plugins by WooThemes" alt="Premium WordPress Themes & Plugins by WooThemes" href="http://www.woothemes.com/">
+										<img width="74" height="19" alt="WooThemes" src="/images/woothemes.png">
+									</a>
+								</p>
+							</div>
+						</div>
+						<!-- .site-info -->
+					</div>
+					<!-- .col-full -->
+				</footer>
+			</div>
+			<script>
+				const searchInput = document.getElementById('searchInput');
+const searchLink = document.getElementById('searchLink');
+
+searchLink.addEventListener('click', function (event) {
+event.preventDefault();
+
+const motCle = searchInput.value;
+const searchUrl = "{{ path('search') }}?motCle=" + encodeURIComponent(motCle);
+window.location.href = searchUrl;
+});
+
+
+const moreInfos = document.querySelectorAll('.moreInfo');
+const infoProduct = document.querySelectorAll('.infoProduct');
+
+moreInfos.forEach((moreInfo, index) => {
+moreInfo.addEventListener('click', () => {
+infoProduct[index].classList.toggle('open');
+});
+});
+
+
+
+			</script>
+		{% endblock %}

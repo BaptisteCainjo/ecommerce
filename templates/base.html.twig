@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Orelsan Store by BAPLISE</title>
+		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+		<title>
+			{% block title %}Orelsan Store by BAPLISE
+			{% endblock %}
+		</title>
+		{% block stylesheets %}
+			<link rel="stylesheet" id="storefront-style-css" href="/css/themes/storefront/style.css" type="text/css"/>
+			<link rel="stylesheet" id="storefront-woocommerce-style-css" href="/css/themes/storefront/assets/css/woocommerce/woocommerce.css" type="text/css"/>
+			<link rel="stylesheet" id="storefront-icons-css" href="/css/themes/storefront/assets/css/base/icons.css" type="text/css"/>
+			<link rel="stylesheet" id="jplayer-css" href="/js/jplayer-2.9.2/skin/blue.monday/css/jplayer.blue.monday.css" type="text/css"/>
+				<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
+
+			
+			
+			<style>
+				id="storefront-style-inline-css"
+				type="text/css"
+				button.menu-toggle,
+				button.menu-toggle:hover,
+				.handheld-navigation .dropdown-toggle {
+					color: #333333;
+				}
+
+				button.menu-toggle,
+				button.menu-toggle:hover {
+					border-color: #333333;
+				}
+
+				button.menu-toggle,
+				button.menu-toggle:hover {
+					background-color: #ffffff;
+				}
+
+				button.menu-toggle:after,
+				button.menu-toggle:before,
+				button.menu-toggle span:before {
+					background-color: #333333;
+				}
+
+				table.cart td.product-remove,
+				table.cart td.actions {
+					border-top-color: #ffffff;
+				}
+			</style>
+
+		{% endblock %}
+		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+	</head>
+	<body>
+		{# <p>{{app.user.email}}</p> #}
+		<p>
+			{# {{app.user.email}} #}
+		</p>
+		<div id="wrapper">
+			<div id="inner-wrapper"> {% block body %}{% endblock %}
+				{% block javascripts %}
+					<script type="text/javascript" src="/js/themes/storefront/assets/js/navigation.min.js"></script>
+					<script type="text/javascript" src="/js/jquery-3.6.3.min.js"></script>
+					<script type="text/javascript" src="/js/jplayer-2.9.2/jplayer/jquery.jplayer.min.js"></script>
+					<script type="text/javascript" src="/js/jplayer-2.9.2/add-on/jplayer.playlist.min.js"></script>
+					<script type="text/javascript" src="/js/audio.js"></script>
+					<script type="text/javascript" src="/js/orelsan.js"></script>
+				{% endblock %}
+
+			</div>
+		</div>
+	</body>
+</html>
